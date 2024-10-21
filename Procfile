@@ -1,0 +1,1 @@
+web: serve -s dist/blood-bank-front-end
