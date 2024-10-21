@@ -1,0 +1,102 @@
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Dashboard</h1>
+    <div class="button-container">
+        <button class="request-button" (click)="getData1()">Buscar número de candidatos por estado</button>
+        <button class="request-button" (click)="getData2()">IMC médio dos candidatos em cada faixa de idade de dez em dez anos</button>
+        <button class="request-button" (click)="getData3()">Percentual de obesos entre os homens e entre as mulheres candidatos(as)</button>
+        <button class="request-button" (click)="getData4()">Média de idade para cada tipo sanguíneo dos candidatos</button>
+        <button class="request-button" (click)="getData5()">Quantidade de possíveis doadores para cada tipo sanguíneo receptor</button>
+    </div>
+    
+    <div *ngIf="hasStateData()">
+        <h2>Resultados por Estado</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estado</th>
+                    <th>Número de Candidatos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let state of (stateData | keyvalue)">
+                    <td>{{ state.key }}</td>
+                    <td>{{ state.value }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div *ngIf="imcData.length > 0">
+        <h2>IMC Médio por Faixa Etária</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Faixa Etária</th>
+                    <th>IMC Médio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of imcData">
+                    <td>{{ item.fromAge }} - {{ item.toAge }}</td>
+                    <td>{{ item.imc.toFixed(2) }}</td> <!-- Formata o IMC para duas casas decimais -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="obesityData">
+        <h2>Percentual de Obesidade</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Gênero</th>
+                    <th>Percentual de Obesidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homens</td>
+                    <td>{{ obesityData.male_percentage_of_obesity }}%</td>
+                </tr>
+                <tr>
+                    <td>Mulheres</td>
+                    <td>{{ obesityData.female_percentage_of_obesity }}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="averageAgeByBloodTypeData.length > 0">
+        <h2>Média de Idade por Tipo Sanguíneo</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo Sanguíneo</th>
+                    <th>Idade Média</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of averageAgeByBloodTypeData">
+                    <td>{{ item.bloodType }}</td>
+                    <td>{{ item.averageAge.toFixed(2) }}</td> <!-- Formata a idade média para duas casas decimais -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="potentialDonorsData.length > 0">
+        <h2>Quantidade de Possíveis Doador(es) por Tipo Sanguíneo</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo Sanguíneo</th>
+                    <th>Quantidade de Doador(es)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let donor of potentialDonorsData">
+                    <td>{{ donor.bloodType }}</td>
+                    <td>{{ donor.count }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+</div>
